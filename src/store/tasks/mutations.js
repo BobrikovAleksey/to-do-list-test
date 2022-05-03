@@ -1,4 +1,3 @@
-// import Task from '@/store/classes/Task';
 import { MUTATION_TYPE as MT } from '@/store/dictionary';
 
 /**
@@ -7,7 +6,7 @@ import { MUTATION_TYPE as MT } from '@/store/dictionary';
  * @returns {number}
  */
 const getMaxId = (taskList) => (
-  taskList.reduceRight((max, { id }) => Math.max(id, max), 0)
+  taskList.reduceRight((maxId, task) => Math.max(maxId, task.id), 0)
 );
 
 export default {
@@ -47,5 +46,24 @@ export default {
     state.current.values = data;
     state.lastInsertedId = Math.max(getMaxId(data), state.lastInsertedId);
     state.current.loading = false;
+  },
+
+  /**
+   * @param state
+   * @param task {Task}
+   */
+  [MT.TASK_PREPARE_REMOVE]: (state, task) => {
+    state.cache.removedTask = task;
+  },
+
+  /**
+   * @param state
+   * @param id {number}
+   */
+  [MT.TASK_REMOVE]: (state, id) => {
+    if (!state.current.values.remove(id)) {
+      state.completed.values.remove(id);
+    }
+    state.cache.removedTask = null;
   },
 };

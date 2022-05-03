@@ -1,0 +1,46 @@
+<template>
+  <div class="modal fade" id="removeTask" tabindex="-1" data-bs-backdrop="static"
+       data-bs-keyboard="false" aria-labelledby="removeTaskLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeTaskLabel">Удаление задачи</h5>
+
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"
+                  @click="prepareRemove(null)"/>
+        </div>
+
+        <div class="modal-body">
+          <p>Вы уверены, что хотите удалить задачу: <b>{{ removedTask?.title }}</b>?</p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
+                  @click="prepareRemove(null)">Отменить</button>
+
+          <button class="btn btn-danger" type="button" data-bs-dismiss="modal"
+                  @click="remove">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { Modal } from 'bootstrap';
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  name: 'RemoveTask',
+  methods: {
+    ...mapActions('tasks', ['prepareRemove', 'remove']),
+  },
+  computed: {
+    ...mapGetters('tasks', ['removedTask']),
+  },
+  mounted() {
+    // eslint-disable-next-line no-new
+    (new Modal(this.$el));
+  },
+};
+</script>

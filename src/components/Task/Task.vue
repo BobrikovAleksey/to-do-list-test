@@ -1,23 +1,20 @@
 <template>
   <div class="accordion-item">
     <Header class="d-flex align-items-start" :task="task" :completed="completed"
-            :collapseId="collapseId" :headingId="headingId"/>
+            :collapse-id="collapseId" :dropdown-id="dropdownId" :heading-id="headingId"/>
 
-    <Collapse :task="task" :collapseId="collapseId" :headingId="headingId"/>
+    <Collapse :task="task" :collapse-id="collapseId" :heading-id="headingId"/>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Collapse from './Collapse.vue';
 import Header from './Header/Header.vue';
 
 export default {
   name: 'Task',
   props: {
-    listName: {
-      type: String,
-      required: true,
-    },
     task: {
       type: Object,
       required: true,
@@ -32,11 +29,15 @@ export default {
     Header,
   },
   computed: {
+    ...mapGetters(['currentPage']),
     collapseId() {
-      return `${this.listName}-collapse-task-${this.task.id}`;
+      return `${this.currentPage}-collapse-task-${this.task.id}`;
+    },
+    dropdownId() {
+      return `${this.currentPage}-dropdown-task-${this.task.id}`;
     },
     headingId() {
-      return `${this.listName}-heading-task-${this.task.id}`;
+      return `${this.currentPage}-heading-task-${this.task.id}`;
     },
   },
 };

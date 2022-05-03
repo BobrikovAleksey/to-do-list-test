@@ -3,6 +3,7 @@ import actions from './actions';
 import getters from './getters';
 
 const state = {
+  cache: {},
   current: {
     values: [],
     loading: false,

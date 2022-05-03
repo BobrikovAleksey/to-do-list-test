@@ -1,9 +1,7 @@
 <template>
-  <div class="accordion col-12 col-lg-10" :id="listName">
-    <Task class="p-2" v-for="task in currentTasks" :key="task.id"
-          :list-name="listName" :task="task"/>
-    <Task class="p-2" v-for="task in completedTasks" :key="task.id"
-          :list-name="listName" :task="task" :completed="true"/>
+  <div class="accordion col-12 col-lg-10" id="main-accordion">
+    <Task class="p-2" v-for="task in currentTasks" :key="task.id" :task="task"/>
+    <Task class="p-2" v-for="task in completedTasks" :key="task.id" :task="task" :completed="true"/>
   </div>
 </template>
 
@@ -16,15 +14,10 @@ export default {
   components: {
     Task,
   },
-  data() {
-    return {
-      listName: 'incoming',
-    };
-  },
   computed: {
-    ...mapGetters({
-      currentTasks: 'tasks/current',
-      completedTasks: 'tasks/completed',
+    ...mapGetters('tasks', {
+      currentTasks: 'current',
+      completedTasks: 'completed',
     }),
   },
 };

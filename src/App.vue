@@ -6,18 +6,22 @@
   </main>
 
   <Footer/>
+
+  <RemoveTask/>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import Footer from 'Components/Footer/Footer.vue';
 import Header from 'Components/Header/Header.vue';
+import RemoveTask from 'Components/Modal/RemoveTask.vue';
 
 export default {
   name: 'App',
   components: {
     Footer,
     Header,
+    RemoveTask,
   },
   methods: {
     ...mapActions('tasks', {
