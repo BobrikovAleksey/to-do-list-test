@@ -1,5 +1,5 @@
 <template>
-  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <ul class="navbar-nav me-auto">
     <li class="nav-item">
       <router-link class="nav-link" to="/incoming" :class="{ active: isMainPage }"
                    :aria-current="isMainPage ? 'page' : ''">Входящие</router-link>

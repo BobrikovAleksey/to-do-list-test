@@ -1,0 +1,73 @@
+@import '~@/styles/config';
+
+.task-status {
+  @include transition($btn-transition);
+  appearance: none;
+  background-color: $form-check-input-bg;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: $form-check-input-border;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 1.5em;
+  width: 1.5em;
+  padding: 0;
+  vertical-align: top;
+
+  &:active {
+    background-color: $secondary;
+  };
+
+  &:checked {
+    @if $enable-gradients {
+      background-image: escape-svg($form-check-input-checked-bg-image),
+      var(--#{$variable-prefix}gradient);
+    } @else {
+      background-image: escape-svg($form-check-input-checked-bg-image);
+    };
+
+    background-color: $secondary;
+    border-color: $secondary;
+  };
+
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+  }
+
+  @each $priority, $color in (high, $danger), (middle, $warning), (low, $primary) {
+    &-#{$priority} {
+      background-color: rgba($color, .1);
+
+      &, &:checked {
+        border-color: $color;
+      };
+
+      &:active {
+        background-color: rgba($color, .2);
+      };
+
+      &:checked {
+        background-color: $color;
+
+        &:active {
+          background-color: rgba($color, .8);
+        };
+      };
+
+      &:focus {
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+      }
+    };
+  };
+};
+
+.task-toggler {
+  & > .bi {
+    @include transition($accordion-icon-transition);
+  };
+
+  &:not(.collapsed) > .bi {
+    transform: rotate(90deg);
+  };
+};

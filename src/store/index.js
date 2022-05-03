@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import { MUTATION_TYPE as MT, pages } from './dictionary';
+import tasks from './tasks';
 
 export default createStore({
   state: {
@@ -26,5 +27,6 @@ export default createStore({
     currentPage: (state) => state.page,
   },
   modules: {
+    tasks,
   },
 });

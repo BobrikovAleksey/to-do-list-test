@@ -11,9 +11,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
-          <Nav/>
+          <Nav class="mb-2 mb-lg-0"/>
 
-          <SearchForm/>
+          <SearchForm class="w-auto"/>
         </div>
       </div>
     </nav>

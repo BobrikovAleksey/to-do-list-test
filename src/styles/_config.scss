@@ -5,7 +5,7 @@ $dropdown-link-active-color:          $dropdown-link-hover-color;
 
 $input-border-color:                  $secondary;
 $input-focus-border-color:            rgba($input-border-color, .5);
-$input-focus-box-shadow:              0 0 $input-btn-focus-blur $input-btn-focus-width rgba($secondary, .25);
+$input-focus-box-shadow:              0 0 $input-btn-focus-blur $input-btn-focus-width rgba($secondary, .4);
 
 @import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/utilities';
