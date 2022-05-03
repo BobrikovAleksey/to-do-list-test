@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Footer from 'Components/Footer/Footer.vue';
 import Header from 'Components/Header/Header.vue';
 
@@ -17,6 +18,13 @@ export default {
   components: {
     Footer,
     Header,
+  },
+  methods: {
+    ...mapActions('tasks', ['fetchCurrentTasks', 'fetchCompletedTasks']),
+  },
+  beforeMount() {
+    this.fetchCurrentTasks();
+    this.fetchCompletedTasks();
   },
 };
 </script>
