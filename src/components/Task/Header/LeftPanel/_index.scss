@@ -3,11 +3,11 @@
 .task-status {
   @include transition($btn-transition);
   appearance: none;
-  background-color: $form-check-input-bg;
+  background-color: $body-bg;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  border: $form-check-input-border;
+  border: 1px solid $secondary;
   border-radius: 50%;
   cursor: pointer;
   height: 1.5em;
@@ -16,7 +16,7 @@
   vertical-align: top;
 
   &:active {
-    background-color: $secondary;
+    background-color: rgba($secondary, .2);
   };
 
   &:checked {
@@ -28,11 +28,14 @@
     };
 
     background-color: $secondary;
-    border-color: $secondary;
+
+    &:active {
+      background-color: rgba($secondary, .8);
+    };
   };
 
   &:focus {
-    box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+    box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .4);
   }
 
   @each $priority, $color in (high, $danger), (middle, $warning), (low, $primary) {
@@ -56,7 +59,7 @@
       };
 
       &:focus {
-        box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, .4);
       }
     };
   };

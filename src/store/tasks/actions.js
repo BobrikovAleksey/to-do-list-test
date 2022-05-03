@@ -84,7 +84,7 @@ const fetchData = (key) => new Promise((resolve, reject) => {
  * Получает список выполненных задач
  * @param commit
  */
-const fetchCompletedTasks = ({ commit }) => {
+const fetchCompleted = ({ commit }) => {
   commit(MT.TASK_COMPLETED_LOADING);
 
   fetchData('completedTasks')
@@ -101,7 +101,7 @@ const fetchCompletedTasks = ({ commit }) => {
  * Получает список текущих задач
  * @param commit
  */
-const fetchCurrentTasks = ({ commit }) => {
+const fetchCurrent = ({ commit }) => {
   commit(MT.TASK_CURRENT_LOADING);
 
   fetchData('currentTasks')
@@ -114,7 +114,17 @@ const fetchCurrentTasks = ({ commit }) => {
     });
 };
 
+const complete = ({ commit }, id) => {
+  commit(MT.TASK_COMPLETE, id);
+};
+
+const uncomplete = ({ commit }, id) => {
+  commit(MT.TASK_UNCOMPLETE, id);
+};
+
 export default {
-  fetchCompletedTasks,
-  fetchCurrentTasks,
+  complete,
+  fetchCompleted,
+  fetchCurrent,
+  uncomplete,
 };

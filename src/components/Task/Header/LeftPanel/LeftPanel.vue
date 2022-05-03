@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-sm btn-outline-secondary task-toggler" :class="{ 'collapsed': false }"
+    <button class="btn btn-sm btn-outline-secondary task-toggler" :class="{ 'collapsed': true }"
             type="button" :data-bs-target="`#${collapseId}`" data-bs-toggle="collapse"
             :aria-controls="collapseId" :aria-expanded="false">
       <i class="bi bi-chevron-right"></i>
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'LeftPanel',
   props: {
@@ -33,8 +35,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions('tasks', ['complete', 'uncomplete']),
     changeStatus() {
-      // handle
+      if (this.status) this.complete(this.task.id);
+      else this.uncomplete(this.task.id);
     },
   },
   computed: {

@@ -20,7 +20,10 @@ export default {
     Header,
   },
   methods: {
-    ...mapActions('tasks', ['fetchCurrentTasks', 'fetchCompletedTasks']),
+    ...mapActions('tasks', {
+      fetchCurrentTasks: 'fetchCurrent',
+      fetchCompletedTasks: 'fetchCompleted',
+    }),
   },
   beforeMount() {
     this.fetchCurrentTasks();
