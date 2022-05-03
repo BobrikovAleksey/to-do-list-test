@@ -5,9 +5,8 @@
     <li><Item icon="arrow-bar-down" title="Добавить задачу ниже" disabled/></li>
 
     <li>
-      <Item icon="pencil" title="Изменить задачу" @click="prepareRemove(task)"
-            data-bs-toggle="modal" data-bs-target="#editTask"
-            :data-id="task.id" :data-title="task.title" disabled/>
+      <Item icon="pencil" title="Изменить задачу" data-bs-toggle="modal" data-bs-target="#editTask"
+            @click="prepare(task)"/>
     </li>
 
     <li><hr class="dropdown-divider"></li>
@@ -44,9 +43,8 @@
     <li><hr class="dropdown-divider"></li>
 
     <li>
-      <Item icon="trash3" title="Удалить задачу" @click="prepareRemove(task)"
-            data-bs-toggle="modal" data-bs-target="#removeTask"
-            :data-id="task.id" :data-title="task.title"/>
+      <Item icon="trash3" title="Удалить задачу" data-bs-toggle="modal" data-bs-target="#removeTask"
+            @click="prepare(task)"/>
     </li>
   </ul>
 </template>
@@ -89,7 +87,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions('tasks', ['prepareRemove']),
+    ...mapActions('tasks', ['prepare']),
   },
 };
 </script>

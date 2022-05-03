@@ -1,6 +1,6 @@
 export default {
   // cache
-  removedTask: (state) => state.cache.removedTask,
+  preparedTask: (state) => state.cache.preparedTask,
   // tasks
   completed: (state) => state.completed.values,
   completedLoading: (state) => state.completed.loading,

@@ -122,20 +122,29 @@ const uncomplete = ({ commit }, id) => {
   commit(MT.TASK_UNCOMPLETE, id);
 };
 
-const prepareRemove = ({ commit }, task) => {
-  commit(MT.TASK_PREPARE_REMOVE, task);
+const prepare = ({ commit }, task) => {
+  commit(MT.TASK_PREPARE, task);
 };
 
 const remove = ({ commit, state }) => {
-  const { removedTask } = state.cache;
-  if (removedTask) commit(MT.TASK_REMOVE, removedTask.id);
+  const { preparedTask } = state.cache;
+  if (preparedTask) commit(MT.TASK_REMOVE, preparedTask.id);
+};
+
+/**
+ * @param commit
+ * @param data {object}
+ */
+const update = ({ commit }, data) => {
+  commit(MT.TASK_UPDATE, data);
 };
 
 export default {
   complete,
   fetchCompleted,
   fetchCurrent,
-  prepareRemove,
+  prepare,
   remove,
   uncomplete,
+  update,
 };

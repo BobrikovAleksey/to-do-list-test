@@ -6,17 +6,15 @@
         <div class="modal-header">
           <h5 class="modal-title" id="removeTaskLabel">Удаление задачи</h5>
 
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"
-                  @click="prepareRemove(null)"/>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Закрыть"/>
         </div>
 
         <div class="modal-body">
-          <p>Вы уверены, что хотите удалить задачу: <b>{{ removedTask?.title }}</b>?</p>
+          <p>Вы уверены, что хотите удалить задачу: <b>{{ preparedTask?.title }}</b>?</p>
         </div>
 
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
-                  @click="prepareRemove(null)">Отменить</button>
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отменить</button>
 
           <button class="btn btn-danger" type="button" data-bs-dismiss="modal"
                   @click="remove">Удалить</button>
@@ -33,14 +31,15 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'RemoveTask',
   methods: {
-    ...mapActions('tasks', ['prepareRemove', 'remove']),
+    ...mapActions('tasks', ['remove']),
   },
   computed: {
-    ...mapGetters('tasks', ['removedTask']),
+    ...mapGetters('tasks', ['preparedTask']),
   },
   mounted() {
-    // eslint-disable-next-line no-new
-    (new Modal(this.$el));
+    if (!window.$bs) window.$bs = {};
+    if (!window.$bs.modal) window.$bs.modal = {};
+    window.$bs.modal.removeTask = new Modal(this.$el);
   },
 };
 </script>

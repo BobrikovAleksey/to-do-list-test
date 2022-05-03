@@ -52,8 +52,8 @@ export default {
    * @param state
    * @param task {Task}
    */
-  [MT.TASK_PREPARE_REMOVE]: (state, task) => {
-    state.cache.removedTask = task;
+  [MT.TASK_PREPARE]: (state, task) => {
+    state.cache.preparedTask = task;
   },
 
   /**
@@ -64,6 +64,15 @@ export default {
     if (!state.current.values.remove(id)) {
       state.completed.values.remove(id);
     }
-    state.cache.removedTask = null;
+  },
+
+  /**
+   * @param state
+   * @param data {object}
+   */
+  [MT.TASK_UPDATE]: (state, data) => {
+    let task = state.current.values.find(data.id);
+    if (!task) task = state.completed.values.find(data.id);
+    if (task) task.update(data);
   },
 };

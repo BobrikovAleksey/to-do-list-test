@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="btn btn-sm btn-outline-secondary" type="button" title="Изменить задачу"
-            data-bs-toggle="tooltip" data-bs-placement="bottom" disabled>
+            data-bs-toggle="tooltip" data-bs-placement="bottom" @click="handleEditClick">
       <i class="bi bi-pencil"></i>
     </button>
 
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Dropdown from './Dropdown/Dropdown.vue';
 
 export default {
@@ -38,6 +39,13 @@ export default {
   },
   components: {
     Dropdown,
+  },
+  methods: {
+    ...mapActions('tasks', ['prepare']),
+    handleEditClick() {
+      this.prepare(this.task);
+      window.$bs.modal.editTask.show();
+    },
   },
 };
 </script>

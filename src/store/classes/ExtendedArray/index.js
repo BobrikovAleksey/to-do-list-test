@@ -28,6 +28,29 @@ class ExtendedArray extends Array {
   }
 
   /**
+   * Возвращает индекс искомого элемента
+   * @param value {any}
+   * @param key {string}
+   * @returns {any|boolean} any - элемент массива
+   */
+  findIndex(value, key = 'id') {
+    return this.type === 'object'
+      ? super.findIndex((el) => (el[key] === value))
+      : super.findIndex((el) => (el === value));
+  }
+
+  /**
+   * Возвращает искомый элемент
+   * @param value {any}
+   * @param key {string}
+   * @returns {any|boolean} any - элемент массива
+   */
+  find(value, key = 'id') {
+    const i = this.findIndex(value, key);
+    return (i >= 0) ? this[i] : null;
+  }
+
+  /**
    * Вставляет новый элемент в определенную позицию (индекс)
    * @param pos {number}
    * @param item {any}
@@ -92,10 +115,7 @@ class ExtendedArray extends Array {
    * @returns {any|boolean} any - элемент массива
    */
   remove(value, key = 'id') {
-    const i = this.type === 'object'
-      ? this.findIndex((el) => (el[key] === value))
-      : this.findIndex((el) => (el === value));
-    return this.removeByIndex(i);
+    return this.removeByIndex(this.findIndex(value, key));
   }
 }
 
