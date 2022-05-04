@@ -35,10 +35,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions('tasks', ['complete', 'uncomplete']),
+    ...mapActions('tasks', {
+      completeTask: 'complete',
+      uncompleteTask: 'uncomplete',
+    }),
     changeStatus() {
-      if (this.status) this.complete(this.task.id);
-      else this.uncomplete(this.task.id);
+      if (this.status) this.completeTask(this.task.id);
+      else this.uncompleteTask(this.task.id);
     },
   },
   computed: {

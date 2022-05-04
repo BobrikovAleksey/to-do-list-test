@@ -1,12 +1,14 @@
 <template>
   <ul class="dropdown-menu" :aria-labelledby="dropdownId">
-    <li><Item icon="arrow-bar-up" title="Добавить задачу выше" disabled/></li>
+    <li><Item icon="arrow-bar-up" title="Добавить задачу выше" data-bs-toggle="modal"
+              data-bs-target="#editTask" @click="handleInsert(-1)" disabled/></li>
 
-    <li><Item icon="arrow-bar-down" title="Добавить задачу ниже" disabled/></li>
+    <li><Item icon="arrow-bar-down" title="Добавить задачу ниже" data-bs-toggle="modal"
+              data-bs-target="#editTask" @click="handleInsert(+1)" disabled/></li>
 
     <li>
       <Item icon="pencil" title="Изменить задачу" data-bs-toggle="modal" data-bs-target="#editTask"
-            @click="prepare(task)"/>
+            @click="prepareTask(task.id)"/>
     </li>
 
     <li><hr class="dropdown-divider"></li>
@@ -20,7 +22,7 @@
       </div>
 
       <button class="btn btn-sm btn-outline-secondary ms-3" title="Назначить срок..."
-              data-bs-toggle="tooltip" data-bs-placement="bottom" disabled>
+              data-bs-tooltip="dropdown" data-bs-placement="bottom" disabled>
         <i class="bi bi-calendar2-event"></i>
       </button>
     </li>
@@ -44,12 +46,13 @@
 
     <li>
       <Item icon="trash3" title="Удалить задачу" data-bs-toggle="modal" data-bs-target="#removeTask"
-            @click="prepare(task)"/>
+            @click="prepareTask(task.id)"/>
     </li>
   </ul>
 </template>
 
 <script>
+import { Tooltip } from 'bootstrap';
 import { mapActions } from 'vuex';
 import Item from './Item.vue';
 import RadioItem from './RadioItem.vue';
@@ -87,7 +90,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions('tasks', ['prepare']),
+    ...mapActions('tasks', {
+      prepareTask: 'prepare',
+      prepareInsertDir: 'prepareInsertDir',
+    }),
+    handleInsert(dir) {
+      this.prepareTask(-this.task.id);
+      this.prepareInsertDir(dir);
+    },
+  },
+  mounted() {
+    this.$el.querySelectorAll('[data-bs-tooltip="dropdown"]').forEach((el) => new Tooltip(el));
   },
 };
 </script>

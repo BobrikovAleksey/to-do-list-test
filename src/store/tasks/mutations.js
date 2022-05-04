@@ -1,3 +1,4 @@
+import Task from '@/store/classes/Task';
 import { MUTATION_TYPE as MT } from '@/store/dictionary';
 
 /**
@@ -10,20 +11,6 @@ const getMaxId = (taskList) => (
 );
 
 export default {
-  [MT.TASK_COMPLETE]: (state, id) => {
-    const task = state.current.values.remove(id);
-    if (task) state.completed.values.unshift(task);
-  },
-
-  [MT.TASK_UNCOMPLETE]: (state, id) => {
-    const task = state.completed.values.remove(id);
-    if (task) state.current.values.push(task);
-  },
-
-  [MT.TASK_COMPLETED_LOADING]: (state) => {
-    state.completed.loading = true;
-  },
-
   /**
    * @param state
    * @param data {Task[]}
@@ -34,8 +21,8 @@ export default {
     state.completed.loading = false;
   },
 
-  [MT.TASK_CURRENT_LOADING]: (state) => {
-    state.current.loading = true;
+  [MT.TASK_COMPLETED_LOADING]: (state) => {
+    state.completed.loading = true;
   },
 
   /**
@@ -48,12 +35,58 @@ export default {
     state.current.loading = false;
   },
 
+  [MT.TASK_CURRENT_LOADING]: (state) => {
+    state.current.loading = true;
+  },
+
+  [MT.TASK_COMPLETE]: (state, id) => {
+    const task = state.current.values.remove(id);
+    if (task) state.completed.values.unshift(task);
+  },
+
+  [MT.TASK_UNCOMPLETE]: (state, id) => {
+    const task = state.completed.values.remove(id);
+    if (task) state.current.values.push(task);
+  },
+
   /**
    * @param state
-   * @param task {Task}
+   * @param data {object}
    */
-  [MT.TASK_PREPARE]: (state, task) => {
-    state.cache.preparedTask = task;
+  [MT.TASK_ADD]: (state, data) => {
+    const { insertDir, preparedId } = state.cache;
+    const { values } = state.current;
+    const pos = values.findIndex(preparedId) + insertDir;
+    console.log(preparedId);
+    console.log(pos);
+    console.log(data);
+    // state.lastInsertedId += 1;
+    // state.current.values.insert(pos, new Task(state.lastInsertedId, data));
+  },
+
+  /**
+   * @param state
+   * @param data {object}
+   */
+  [MT.TASK_APPEND]: (state, data) => {
+    state.lastInsertedId += 1;
+    state.current.values.push(new Task(state.lastInsertedId, data));
+  },
+
+  /**
+   * @param state
+   * @param id {number}
+   */
+  [MT.TASK_PREPARE_ID]: (state, id) => {
+    state.cache.preparedId = id;
+  },
+
+  /**
+   * @param state
+   * @param dir {number}
+   */
+  [MT.TASK_PREPARE_INSERT_DIR]: (state, dir) => {
+    state.cache.insertDir = dir;
   },
 
   /**

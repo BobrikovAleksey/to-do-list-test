@@ -1,13 +1,17 @@
 <template>
-  <input class="btn-check" type="radio" :name="groupName" :id="inputId" autocomplete="off"
-         :value="item.value" :checked="item.checked" @change="change">
-  <label class="btn btn-sm btn-outline-light" :for="inputId" :title="item.title"
-         data-bs-toggle="tooltip" data-bs-placement="bottom">
-    <i :class="iconClasses"></i>
-  </label>
+  <div>
+    <input class="btn-check" type="radio" :name="groupName" :id="inputId" autocomplete="off"
+           :value="item.value" :checked="item.checked" @change="change">
+    <label class="btn btn-sm btn-outline-light" :for="inputId" :title="item.title"
+           data-bs-placement="bottom">
+      <i :class="iconClasses"></i>
+    </label>
+  </div>
 </template>
 
 <script>
+import { Tooltip } from 'bootstrap';
+
 export default {
   name: 'RadioItem',
   props: {
@@ -38,6 +42,9 @@ export default {
     inputId() {
       return `${this.groupName}-${this.item.value}`;
     },
+  },
+  mounted() {
+    this.$el.querySelectorAll('label').forEach((el) => new Tooltip(el));
   },
 };
 </script>

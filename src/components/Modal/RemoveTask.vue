@@ -17,7 +17,7 @@
           <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Отменить</button>
 
           <button class="btn btn-danger" type="button" data-bs-dismiss="modal"
-                  @click="remove">Удалить</button>
+                  @click="confirm = true">Удалить</button>
         </div>
       </div>
     </div>
@@ -30,8 +30,22 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'RemoveTask',
+  data() {
+    return {
+      confirm: false,
+    };
+  },
   methods: {
-    ...mapActions('tasks', ['remove']),
+    ...mapActions('tasks', {
+      removeTask: 'remove',
+      prepareTask: 'prepare',
+    }),
+    handleRemove() {
+      if (this.confirm) {
+        this.removeTask();
+        this.prepareTask(null);
+      }
+    },
   },
   computed: {
     ...mapGetters('tasks', ['preparedTask']),
@@ -40,6 +54,8 @@ export default {
     if (!window.$bs) window.$bs = {};
     if (!window.$bs.modal) window.$bs.modal = {};
     window.$bs.modal.removeTask = new Modal(this.$el);
+    this.$el.addEventListener('show.bs.modal', () => { this.confirm = false; });
+    this.$el.addEventListener('hidden.bs.modal', () => { this.handleRemove(); });
   },
 };
 </script>

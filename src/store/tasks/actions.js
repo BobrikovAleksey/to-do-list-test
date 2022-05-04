@@ -31,14 +31,6 @@ const currentTasks = [
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
             culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.`,
   },
-  {
-    id: 3,
-    title: 'Задача 3',
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
-            culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
-            culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.`,
-  },
 ];
 const completedTasks = [
   {
@@ -52,14 +44,6 @@ const completedTasks = [
   {
     id: 8,
     title: 'Задача 8',
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
-            culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
-            culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.`,
-  },
-  {
-    id: 9,
-    title: 'Задача 9',
     description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
             culpa dicta earum facilis magnam molestiae numquam optio sint tenetur.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet commodi
@@ -122,13 +106,42 @@ const uncomplete = ({ commit }, id) => {
   commit(MT.TASK_UNCOMPLETE, id);
 };
 
-const prepare = ({ commit }, task) => {
-  commit(MT.TASK_PREPARE, task);
+/**
+ * @param commit
+ * @param data {object}
+ */
+const add = ({ commit }, data) => {
+  console.log(data);
+  if (data.title) commit(MT.TASK_ADD, data);
+};
+
+/**
+ * @param commit
+ * @param data {object}
+ */
+const append = ({ commit }, data) => {
+  if (data.title) commit(MT.TASK_APPEND, data);
+};
+
+/**
+ * @param commit
+ * @param id {number}
+ */
+const prepare = ({ commit }, id) => {
+  commit(MT.TASK_PREPARE_ID, id);
+};
+
+/**
+ * @param commit
+ * @param dir {number}
+ */
+const prepareInsertDir = ({ commit }, dir) => {
+  commit(MT.TASK_PREPARE_INSERT_DIR, dir);
 };
 
 const remove = ({ commit, state }) => {
-  const { preparedTask } = state.cache;
-  if (preparedTask) commit(MT.TASK_REMOVE, preparedTask.id);
+  const { preparedId } = state.cache;
+  if (preparedId) commit(MT.TASK_REMOVE, preparedId);
 };
 
 /**
@@ -140,10 +153,13 @@ const update = ({ commit }, data) => {
 };
 
 export default {
+  add,
+  append,
   complete,
   fetchCompleted,
   fetchCurrent,
   prepare,
+  prepareInsertDir,
   remove,
   uncomplete,
   update,
